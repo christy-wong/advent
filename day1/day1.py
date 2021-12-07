@@ -24,8 +24,8 @@ def count_moving_increases(lines):
   return increase
 
 if __name__ == "__main__":
-    f = open('depths.txt')
-    lines = [int(i) for i in f.readlines()]
+  f = open('depths.txt')
+  lines = [int(i) for i in f.readlines()]
 
-    print(count_increases(lines))
-    print(count_moving_increases(lines))
+  print(count_increases(lines))
+  print(count_moving_increases(lines))
