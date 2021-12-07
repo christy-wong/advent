@@ -18,4 +18,4 @@ def increasing_depths(
 
 if __name__ == "__main__":
     print(increasing_depths())  # Part 1 Solution: 1581
-    print(increasing_depths(window_size=3))  # Part 2 Solution:
+    print(increasing_depths(window_size=3))  # Part 2 Solution: 1618
