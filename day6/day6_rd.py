@@ -30,3 +30,4 @@ def fish_count_after_n_days(n: int, data: List[int]) -> int:
 if __name__ == "__main__":
     data = read_data("./lanternfish_rd.txt")
     print(fish_count_after_n_days(80, data))  # Part 1 Solution: 352872
+    print(fish_count_after_n_days(256, data))  # Part 2 Solution: 352872
