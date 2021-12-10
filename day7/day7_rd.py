@@ -27,9 +27,9 @@ def fuel_consumption(data: np.array, cost_scale="constant") -> int:
     d = np.abs(data - np.median(data))
     l1_cost_min = int(d.sum())
 
-    # Choose 25% of total integer points around the mean
+    # Choose interval of integer points around the mean
     m_star = np.mean(data)
-    search_interval = data.max() - data.min() / 8
+    search_interval = data.max() - data.min() / 4
     m_low, m_high = m_star - search_interval, m_star + search_interval
 
     align_pos = minimize_scalar(
