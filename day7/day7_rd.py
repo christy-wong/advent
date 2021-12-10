@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     print(fuel_consumption(data))  # Part 1 Solution: 342730
     print(fuel_consumption(data, cost_scale="linear"))  # Part 2 Solution: 92335207
-    print(linear_scale_cost_function(data, np.mean(data)))  # 2335207
+    print(linear_scale_cost_function(data, np.mean(data)))  # 92335207
     # Notice that the mean works for my given input data, though some searching
     # (above or below the float value) for integers that work may be required.
     # See TEST section below.
