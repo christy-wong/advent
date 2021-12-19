@@ -47,12 +47,12 @@ def get_three_largest_basins(data: np.array) -> List[int]:
 
 def find_product_of_three_largest_basins(data: np.array) -> int:
     """
-    Multiples the size of the three largest basins together
+    Multiplies the size of the three largest basins together
     """
     return np.product(get_three_largest_basins(data))
 
 
 if __name__ == "__main__":
-    data = read_data("./vents.txt")
+    data = read_data("./vents_rd.txt")
     print(find_sum_of_risk_levels(data))  # Part 1 Solution: 496
     print(find_product_of_three_largest_basins(data))  # Part 2 Solution: 902880
