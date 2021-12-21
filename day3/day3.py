@@ -108,5 +108,5 @@ def co2_rating(lines):
 if __name__ == "__main__":
   f = open('rays.txt')
   lines = [line.rstrip('\n') for line in f]
-  print(gamma(lines)*episilon(lines))
-  print(oxygen_rating(lines)*co2_rating(lines))
+  print(gamma(lines)*episilon(lines)) # Part 1 Solution: 2003336
+  print(oxygen_rating(lines)*co2_rating(lines)) # Part 2 Solution: 1877139
