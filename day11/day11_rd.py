@@ -63,6 +63,18 @@ def flashes_after_n_steps(data: np.array, n: int) -> int:
     return flashes
 
 
+def first_unanimous_flash_step(data: np.array) -> int:
+    """
+    Returns the step in which all octopuses have flashed
+    """
+    step = 0
+    while data.size - np.count_nonzero(data) != data.size:
+        data = take_step(data)
+        step += 1
+    return step
+
+
 if __name__ == "__main__":
     data = read_data("./octopuses_rd.txt")
     print(flashes_after_n_steps(data, 100))  # Part 1 Solution: 1594
+    print(first_unanimous_flash_step(data))  # Part 2 Solution: 437
