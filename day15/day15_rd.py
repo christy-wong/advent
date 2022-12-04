@@ -10,15 +10,29 @@ def input_reader(f: str) -> np.array:
         return np.array(lines)
 
 
+def augment_cave(tile: np.array) -> np.array:
+    tile_width, tile_height = tile.shape
+    full_cave = np.tile(tile, (5, 5))
+    tile_incr = np.vectorize(lambda r: (r % 9) + ((r % 9 == 0) * 9))
+    for i in range(5):
+        for j in range(5):
+            x, y = i * tile_height, j * tile_width
+            full_cave[x : x + tile_height, y : y + tile_width] = tile_incr(
+                tile + (i + j)
+            )
+    return full_cave
+
+
 DATA = input_reader("./chiton_rd.txt")
+DATA2 = augment_cave(DATA)
 
 
 class Graph:
     def __init__(self, grid: np.array):
-        self._risks = {i: risk for i, risk in np.ndenumerate(grid)}
+        self._grid = grid
+        self._risks = {i: risk for i, risk in np.ndenumerate(self._grid)}
         self.start = (0, 0)
-        self.end = max(self._risks, key=lambda t: t[0] + t[1])
-
+        self.end = self._grid.shape[0] - 1, self._grid.shape[1] - 1
         self.graph = {
             vertex: self._get_adjacent_vertices(vertex) for vertex in self._risks
         }
@@ -29,16 +43,16 @@ class Graph:
 
     def _get_adjacent_vertices(self, vertex: Tuple[int]) -> List[Tuple[int]]:
         row, col = vertex
-        potential_adjacencies = {
-            (row - 1, col),
-            (row + 1, col),
-            (row, col - 1),
-            (row, col + 1),
-        }
-        return {
-            adjacent: self._risks[adjacent]
-            for adjacent in potential_adjacencies.intersection(self._risks)
-        }
+        adjacencies = list(
+            filter(
+                lambda t: t[0] >= 0
+                and t[1] >= 0
+                and t[0] <= self.end[0]
+                and t[1] <= self.end[1],
+                [(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)],
+            )
+        )
+        return {adjacent: self._risks[adjacent] for adjacent in adjacencies}
 
     def get_min_risk(self) -> int:
         """
@@ -50,7 +64,8 @@ class Graph:
         while pq:
             current_risk, current_vertex = heapq.heappop(pq)
             # NOTE: This is a very important condition for the priority queue
-            # to exhaust itself (stopping condition)
+            # to exhaust itself; a node isn't explored more than once even if
+            # added to the queue multiple times
             if current_vertex in visited:
                 continue
             for neighbor, neighbor_risk in self.graph[current_vertex].items():
@@ -63,4 +78,6 @@ class Graph:
 
 
 if __name__ == "__main__":
-    print(Graph(DATA).get_min_risk())  # 714
+    small_cave, big_cave = Graph(DATA), Graph(DATA2)
+    print(small_cave.get_min_risk())  # 714
+    print(big_cave.get_min_risk())  # 2948
